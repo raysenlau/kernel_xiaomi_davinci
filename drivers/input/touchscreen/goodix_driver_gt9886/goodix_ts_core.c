@@ -876,7 +876,7 @@ static int goodix_ts_input_report(struct input_dev *dev,
 			/*input_report_abs(dev, ABS_MT_PRESSURE, coords->p);*/
 			input_report_abs(dev, ABS_MT_TOUCH_MINOR, coords->area);
 
-			if ((core_data->event_status & 0x88) != 0x88 || !core_data->fod_enabled)
+			if ((core_data->event_status & 0x88) != 0x88 || !core_data->fod_status)
 				coords->overlapping_area = 0;
 
 			input_report_abs(dev, ABS_MT_WIDTH_MINOR, coords->overlapping_area);
@@ -904,7 +904,7 @@ static int goodix_ts_input_report(struct input_dev *dev,
 
 	/*report finger*/
 	/*ts_info("get_event_now :0x%02x, pre_event : %d", get_event_now, pre_event);*/
-	if ((core_data->event_status & 0x88) == 0x88 && core_data->fod_enabled) {
+	if ((core_data->event_status & 0x88) == 0x88 && core_data->fod_status) {
 		input_report_key(core_data->input_dev, BTN_INFO, 1);
 		/*input_report_key(core_data->input_dev, KEY_INFO, 1);*/
 		core_data->fod_pressed = true;
